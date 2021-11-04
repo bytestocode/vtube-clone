@@ -7,7 +7,7 @@
     "url": "git+https://github.com/reload1bronze/vtube-reloaded.git"
   },
   "scripts": {
-    "dev": "nodemon -L --exec babel-node index.js",
+    "dev": "nodemon --exec babel-node src/server.js",
     "win": "node index.js"
   },
   "author": "house9stone<house9stone@gmail.com>",
