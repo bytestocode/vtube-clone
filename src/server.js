@@ -18,7 +18,7 @@ const privateMiddleware = (req, res, next) => {
 };
 
 const hanldeHome = (req, res, next) => {
-  return res.send("<h1>dfdf123df</h1>");
+  return res.send("<h1>안녕하세요 홈페이지입니다.</h1><p>Node.js 학습중입니다</p>");
 };
 
 const handleLogin = (req, res) => {
