@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const videoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxLength: 80 },
   description: { type: String, required: true, trim: true, minLength: 20 },
-  hashtags: [{ type: String, trim: true  }],
+  hashtags: [{ type: String, trim: true }],
   createdAt: { type: Date, required: true, default: Date.now },
   meta: {
     views: { type: Number, default: 0, required: true },
@@ -12,5 +12,13 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
+// 미들웨어
+videoSchema.pre("save", async function () {
+  this.hashtags = this.hashtags[0]
+      .split(",")
+      .map((word) => (word.startsWith("#") ? word : `#${word}`));
+});
+
+// 비디오 모델 생성
 const Video = mongoose.model("Video", videoSchema);
 export default Video;
