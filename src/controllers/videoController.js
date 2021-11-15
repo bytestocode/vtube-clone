@@ -74,7 +74,7 @@ export const search = async (req, res) => {
   if (keyword) {
     videos = await Video.find({
       title: {
-        // 몽고DB에서 처리해주는 정규표현식 
+        // 몽고DB에서 처리해주는 정규표현식
         $regex: new RegExp(keyword, "i"),
       },
     });
