@@ -46,15 +46,18 @@ export const getUpload = (req, res) => {
 // 포스트 요청을 하면 해당 url을 호출하고,
 // 해당 url에서 포스트 처리를 해줌 (ex. 홈 페이지로 이동)
 export const postUpload = async (req, res) => {
+  const { path: fileUrl } = req.file;
   const { title, description, hashtags } = req.body;
   try {
     await Video.create({
       title,
       description,
+      fileUrl,
       hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect("/");
   } catch (error) {
+    console.log(error);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
