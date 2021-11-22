@@ -2,7 +2,9 @@ import Video from "../models/Video";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" });
+  const videos = await Video.find({})
+  .sort({ createdAt: "desc" })
+  .populate("owner");
   // console.log(videos);
   return res.render("home", { pageTitle: "Home", videos });
 };
@@ -110,7 +112,7 @@ export const search = async (req, res) => {
         // 몽고DB에서 처리해주는 정규표현식
         $regex: new RegExp(keyword, "i"),
       },
-    });
+    }).populate("owner");
   }
   return res.render("search", { pageTitle: "Search", videos });
 };
