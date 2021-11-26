@@ -5,7 +5,6 @@ export const home = async (req, res) => {
   const videos = await Video.find({})
     .sort({ createdAt: "desc" })
     .populate("owner");
-  // console.log(videos);
   return res.render("home", { pageTitle: "Home", videos });
 };
 
@@ -30,7 +29,7 @@ export const getEdit = async (req, res) => {
   if (String(video.owner) !== String(_id)) {
     return res.status(403).redirect("/");
   }
-  return res.render("edit", { pageTitle: "Edit: ${video.title}", video });
+  return res.render("edit", { pageTitle: `Edit: ${video.title}`, video });
 };
 
 export const postEdit = async (req, res) => {
@@ -58,19 +57,19 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 
-// 포스트 요청을 하면 해당 url을 호출하고,
-// 해당 url에서 포스트 처리를 해줌 (ex. 홈 페이지로 이동)
 export const postUpload = async (req, res) => {
   const {
     user: { _id },
   } = req.session;
-  const { path: fileUrl } = req.file;
+  const { video, thumb } = req.files;
+  console.log(video, thumb);
   const { title, description, hashtags } = req.body;
   try {
     const newVideo = await Video.create({
       title,
       description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
@@ -109,8 +108,7 @@ export const search = async (req, res) => {
   if (keyword) {
     videos = await Video.find({
       title: {
-        // 몽고DB에서 처리해주는 정규표현식
-        $regex: new RegExp(keyword, "i"),
+        $regex: new RegExp(`${keyword}$`, "i"),
       },
     }).populate("owner");
   }
