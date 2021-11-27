@@ -99,22 +99,22 @@ const handleMouseLeave = () => {
   controlsTimeout = setTimeout(hideControls, 3000);
 };
 
-const handleKeydown = (e) => {
-  e.preventDefault();
-  switch (e.key) {
-    case " ":
-      handlePlayClick();
-      break;
-    case "m":
-    case "M":
-      handleMuteClick();
-      break;
-    case "f":
-    case "F":
-      handleFullscreen();
-      break;
-  }
-};
+// const handleKeydown = (e) => {
+//   e.preventDefault();
+//   switch (e.key) {
+//     case " ":
+//       handlePlayClick();
+//       break;
+//     case "m":
+//     case "M":
+//       handleMuteClick();
+//       break;
+//     case "f":
+//     case "F":
+//       handleFullscreen();
+//       break;
+//   }
+// };
 
 const handleEnded = () => {
   const { id } = videoContainer.dataset;
@@ -132,6 +132,6 @@ video.addEventListener("click", handlePlayClick);
 video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
-window.addEventListener("keydown", handleKeydown);
+// video.addEventListener("keydown", handleKeydown);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullscreen);
